@@ -1,2 +1,2 @@
-export {default as withScrollEndEvent} from './withScrollEndEvent';
-export {getPageIndex} from './getPageIndex';
+export { default as withScrollEndEvent } from "./withScrollEndEvent";
+export { getPageIndex } from "./getPageIndex";

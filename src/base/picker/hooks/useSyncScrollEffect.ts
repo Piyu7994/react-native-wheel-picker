@@ -1,11 +1,10 @@
-import {type RefObject, useEffect} from 'react';
-import type {ListMethods} from '../../types';
-
+import { type RefObject, useEffect } from 'react';
+import type { ListMethods } from "../../types";
 const useSyncScrollEffect = ({
   listRef,
   valueIndex,
   activeIndexRef,
-  touching,
+  touching
 }: {
   listRef: RefObject<ListMethods>;
   valueIndex: number;
@@ -13,16 +12,13 @@ const useSyncScrollEffect = ({
   touching: boolean;
 }) => {
   useEffect(() => {
-    if (
-      listRef.current == null ||
-      touching ||
-      activeIndexRef.current === valueIndex
-    ) {
+    if (listRef.current == null || touching || activeIndexRef.current === valueIndex) {
       return;
     }
-
-    listRef.current.scrollToIndex({index: valueIndex, animated: true});
+    listRef.current.scrollToIndex({
+      index: valueIndex,
+      animated: true
+    });
   }, [valueIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 };
-
 export default useSyncScrollEffect;
