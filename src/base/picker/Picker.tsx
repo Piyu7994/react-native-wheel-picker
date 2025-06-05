@@ -45,6 +45,7 @@ export type PickerProps<ItemT extends PickerItem<any>> = {
 
   style?: StyleProp<ViewStyle>;
   itemTextStyle?: StyleProp<TextStyle>;
+  selectedTextStyle?: StyleProp<TextStyle>;
   overlayItemStyle?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
 
@@ -98,6 +99,7 @@ const Picker = <ItemT extends PickerItem<any>>({
 
   style,
   itemTextStyle,
+  selectedTextStyle,
   overlayItemStyle,
   contentContainerStyle,
   ...restProps
@@ -114,9 +116,19 @@ const Picker = <ItemT extends PickerItem<any>>({
     return [items, height];
   }, [itemHeight, visibleItemCount]);
   const renderPickerItem = useCallback<RenderPickerItem<ItemT>>(
-    ({item, index, key}) =>
-      renderItemContainer({key, item, index, faces, renderItem, itemTextStyle}),
-    [faces, itemTextStyle, renderItem, renderItemContainer],
+    ({item, index, key}: {item: ItemT; index: number; key?: string}) =>
+      renderItemContainer({
+        key,
+        item,
+        index,
+        faces,
+        renderItem: (props) => renderItem({
+          ...props,
+          itemTextStyle: value === item.value ? selectedTextStyle : itemTextStyle
+        }),
+        itemTextStyle,
+      }),
+    [faces, itemTextStyle, selectedTextStyle, renderItem, renderItemContainer, value],
   );
 
   const {activeIndexRef, onScrollEnd} = useValueEventsEffect(
